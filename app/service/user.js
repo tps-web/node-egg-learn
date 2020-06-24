@@ -19,7 +19,14 @@ class UserService extends Service {
   // 登陆
    async login(username,password) {
    const user =await this.app.mysql.get('user', {username : username});
-     if (!user || user.password != password){
+
+   var secret = 'tang12115454'; //密钥--可以随便写
+   var ss = user.password; //这是user加密后的结果 赋值给变量
+   var decipher = crypto.createDecipher('aes192', secret);
+   var dec = decipher.update(ss, 'hex', 'utf8'); //编码方式从hex转为utf-8;
+   dec += decipher.final('utf8'); //编码方式从utf-8;
+   
+     if (!user || password != dec){
             return 201
         } else {
             return user;
@@ -31,7 +38,7 @@ class UserService extends Service {
      if (userQ){
             return 201
         }else {
-        var str = JSON.stringify('data.password'); //明文
+        var str = JSON.stringify(data.password); //明文
         var secret = 'tang12115454'; //密钥--可以随便写
         var cipher = crypto.createCipher('aes192', secret);
         var enc = cipher.update(str, 'utf8', 'hex'); //编码方式从utf-8转为hex;
