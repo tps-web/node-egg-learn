@@ -32,12 +32,33 @@ module.exports = appInfo => {
       agent: false,
     }
   };
-
+ //关闭csrf
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true
+    },
+    // 允许访问接口的白名单
+    domainWhiteList: [ 'http://localhost:9528' ],
+  }
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1592896589397_3857';
+ 
+  config.jwt = {
+    secret: '123456',
+  };
 
   // add your middleware config here
   config.middleware = [];
+  
+ // 跨域配置
+  config.cors = {
+      origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  };
+  
+  config.uploadDir = 'app/public/admin/upload';
+
 
   // add your user config here
   const userConfig = {

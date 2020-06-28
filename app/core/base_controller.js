@@ -3,7 +3,7 @@ const { Controller } = require('egg');
 
 class BaseController extends Controller {
 
-  success(data) {
+  success(data,msg) {
     switch (data) {
       case 201:
        this.ctx.body = {code: 201,data:'操作失败'};
@@ -13,6 +13,13 @@ class BaseController extends Controller {
       break;
     }
   
+  }
+  message(code,msg,data){
+    this.ctx.body={
+      code,
+      msg,
+      data
+    }
   }
 
   notFound(msg) {
