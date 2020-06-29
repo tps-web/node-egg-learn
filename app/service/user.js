@@ -98,12 +98,14 @@ class UserService extends Service {
   async updateUser(data){
   	const userQ  = await this.app.mysql.get('user',{id:data.id});
      if (userQ){
-        var str = JSON.stringify(data.password); //明文
-        var secret = 'tang12115454'; //密钥--可以随便写
-        var cipher = crypto.createCipher('aes192', secret);
-        var enc = cipher.update(str, 'utf8', 'hex'); //编码方式从utf-8转为hex;
-        enc += cipher.final('hex'); //编码方式从转为hex;
-        data.password=enc
+      if(data.password){
+         var str = JSON.stringify(data.password); //明文
+         var secret = 'tang12115454'; //密钥--可以随便写
+         var cipher = crypto.createCipher('aes192', secret);
+         var enc = cipher.update(str, 'utf8', 'hex'); //编码方式从utf-8转为hex;
+         enc += cipher.final('hex'); //编码方式从转为hex;
+         data.password=enc
+      }
         // data.updated_time=dateTime
           const result =await this.app.mysql.update('user', data);  // await this.app.mysql.query('update user set username = ? where id = ?',["王五",2]);
             // 判断插入成功

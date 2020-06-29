@@ -14,6 +14,6 @@ module.exports = app => {
   router.delete('/detele/:id', controller.user.deteleUser);
   router.get('/info',jwt, controller.user.info);
   router.get('/logout',jwt, controller.user.logout);
-  router.get('/saveavatar', controller.user.saveAvatar);
+  router.post('/saveavatar', controller.user.saveAvatar);
 
 };

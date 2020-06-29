@@ -80,7 +80,7 @@ class UserController extends Controller {
      // this.success(data);
      this.ctx.body =data
   }
-  //删除
+  //删除 
   async deteleUser(){
      let data =await this.ctx.service.user.deteleUserId(this.ctx.params.id)
      // this.success(data) 
